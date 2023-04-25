@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body>
+    <!-- 这里放内容 -->
+    <button type="button" onclick="myClick1()">测试1</button>
+    <button type="button" onclick="myClick2()">测试2</button>
+
+    <script>
+      function myClick1(){
+        var colors = ["red","green","blue"];
+        console.log(colors.toString());
+        console.log(colors.valueOf());
+        console.log(colors.toLocaleString());
+
+        var person1={
+          toLocaleString:function(){
+            return "Nick";
+          },
+          toString:function(){
+            return "Nich"
+          }
+        };
+        var person2={
+          toLocaleString:function(){
+            return "Grid"
+          },
+          toString:function(){
+            return "Gred"
+          }
+        };
+        var person = [person1,person2];
+
+        console.log(person.toString());
+        console.log(person.toLocaleString());
+
+        var colors = ["red","blue","green"];
+        console.log(colors.join(","));
+        console.log(colors.join("||"));
+        console.log(colors.join());
+        console.log(colors.join(undefined));
+
+        var colors = new Array();
+        var count = colors.push("red","blue");
+        console.log(count);
+        count = colors.push("green");
+        console.log(colors);
+        console.log(colors.length);
+        var item = colors.pop();
+        console.log(item);
+        console.log(colors.length);
+
+        var colorss = ["red","green","blue","yellow","purple"];
+        var color2 = colorss.slice(1);
+        var color3 = colorss.slice(1,4);
+        console.log(color2);
+        console.log(color3);
+        removed = colorss.splice(1,1,"red","purple");
+        console.log(colorss);
+        console.log(removed);
+
+        var text = "cat,bat,sat,cat";
+        var pattern1 = /.at/;
+        var matches = pattern1.exec(text);
+        console.log(matches.index);
+        console.log(matches[0]);
+        console.log(pattern1.lastIndex);
+
+        matches = pattern1.exec(text);
+        console.log(matches.index);
+        console.log(matches[0]);
+        console.log(pattern1.lastIndex);
+
+        var text1 = "this has been a short summer";
+        var pattern = /(.)hort/g;
+        if(pattern.test(text1)){
+          console.log("测试RegExp构造函数属性");
+          console.log(RegExp.input);
+          console.log(RegExp.leftContext);
+          console.log(RegExp.rightContext);
+          console.log(RegExp.lastMatch);
+          console.log(RegExp.lastParen);
+          console.log(RegExp.multiline);
+          console.log("短属性名");
+          console.log(RegExp["$_"]);
+          console.log(RegExp["$&"]);
+        }
+        var pattern = /(..)or(.)/g;
+        if(pattern.test(text1)){
+          console.log("捕获组属性");
+          console.log(RegExp.$1);
+          console.log(RegExp.$2);
+        }
+
+        function createComparisonFunction(propertyName){
+          return function(object1,object2){
+            var value1=object1[propertyName];
+            var value2=object2[propertyName];
+            if(value1<value2){
+              return -1;
+            }else if(value1>value2){
+              return 1;
+            }else{
+              return 0;
+            }
+          }
+        }
+
+        var data = [{name:"Wello",age:10},{name:"John",age:21}];
+        data.sort(createComparisonFunction("name"));
+        console.log("测试函数值传递");
+        console.log(data[0].name);
+
+        window.color = "red";
+        var o = {color:"blue"};
+        function sayColor(){
+          console.log(this.color);
+        }
+        console.log("测试this的作用");
+        sayColor();
+        o.say = sayColor;
+        o.say();
+
+        function outer(){
+          console.log("被inner函数引用");
+        }
+        function inner(){
+          console.log(arguments.callee.caller);
+        }
+        outer();
+
+        var num = 10.004;
+        console.log("数值格式化");
+        console.log(num.toFixed(2));
+
+        var num = 99;
+        console.log("数值格式化Precision");
+        console.log(num.toPrecision(1));
+        console.log(num.toPrecision(2));
+        console.log(num.toPrecision(3));
+
+        var stringValue = "hello";
+        console.log("拼接字符串");
+        console.log(stringValue.concat("world"));
+
+        var stringValue = "hello world";
+        console.log("操作字符串");
+        console.log(stringValue.slice(3));
+        console.log(stringValue.substring(3));
+        console.log(stringValue.substr(3));
+        console.log(stringValue.slice(3,7));
+        console.log(stringValue.substring(3,7));
+        console.log(stringValue.substr(3,7));
+
+        var stringValue = "hello world";
+        console.log("操作字符串(负值)");
+        console.log(stringValue.slice(-3));
+        console.log(stringValue.substring(-3));
+        console.log(stringValue.substr(-3));
+        console.log(stringValue.slice(3,-4));
+        console.log(stringValue.substring(3,-4));
+        console.log(stringValue.substr(3,-4));
+
+        var text = "cat,bat,sat,fat";
+        var pattern = /.at/i;
+        console.log("字符串模式匹配方法match");
+        var matches = text.match(pattern);
+        console.log(matches.index);
+        console.log(matches[0]);
+        console.log(pattern.lastIndex);
+
+        var text = "cat,bat,sat,fat";
+        console.log("测试Replace方法");
+        console.log(text.replace("at","ond"));
+        console.log(text.replace(/at/g,"ond"));
+
+        var text = "cat,bat,sat,fat"
+        console.log(text.replace(/(.at)/g,"word ($1)"));
+      }
+
+      function myClick2(){
+        function htmlEscape(text){
+          return text.replace(/[<>"&]/g,function (match,pos,originalText){
+            switch (match) {
+              case "<":{
+                return "&lt;";
+                break;
+              }
+              case ">":{
+                return "&gt;";
+                break;
+              }
+              case "&":{
+                return "&amp;";
+                break;
+              }
+              case "\"":{
+                return "&quot;";
+                break;
+              }
+            }
+          });
+        }
+        console.log(htmlEscape("<p class=\"greeting\">Hello World!</p>"));
+
+        var colorText = "red,blue,green,yellow";
+        console.log("split用法");
+        var color1 = colorText.split(",");
+        var color2 = colorText.split(",",2);
+        var color3 = colorText.split(/[^\,]+/);
+        console.log(color1);
+        console.log(color2);
+        console.log(color3);
+
+        var uri = "http://localhost:51531/ chuanshanqu.html";
+        console.log("URI编码");
+        console.log(encodeURI(uri));
+        console.log(encodeURIComponent(uri));
+      }
+    </script>
+  </body>
+</html>
